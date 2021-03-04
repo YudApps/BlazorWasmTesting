@@ -10,7 +10,9 @@
     <PackageReference Include="bunit.web" Version="1.0.0-preview-01" />
     <PackageReference Include="bunit.xunit" Version="1.0.0-preview-01" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
+    <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -24,6 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\BlazorWasmTesting.Client.csproj" />
+    <ProjectReference Include="..\Server\BlazorWasmTesting.Server.csproj" />
+    <ProjectReference Include="..\Shared\BlazorWasmTesting.Shared.csproj" />
   </ItemGroup>
 
 </Project>
