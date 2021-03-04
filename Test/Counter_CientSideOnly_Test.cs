@@ -3,9 +3,9 @@ using Bunit;
 using FluentAssertions;
 using Xunit;
 
-namespace BlazorWasmTesting.Test.Client
+namespace BlazorWasmTesting.Test
 {
-    public class ClientSideOnly_CounterTest
+    public class Counter_CientSideOnly_Test
     {
         [Fact]
         public void UiOnly_CounterShouldIncrementWhenClicked()
