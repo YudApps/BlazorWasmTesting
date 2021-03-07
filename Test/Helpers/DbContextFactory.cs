@@ -4,14 +4,14 @@ using System;
 
 namespace BlazorWasmTesting.Test.Helpers
 {
-    class DbContextFactory : IDisposable
+    public class DbContextFactory : IDisposable
     {
-        private SqliteConnection _connection;
+        public  SqliteConnection Connection { get; private set; }
 
         public DbContextFactory()
         {
-            _connection = new SqliteConnection("Filename=:memory:");
-            _connection.Open();
+            Connection = new SqliteConnection("Filename=:memory:");
+            Connection.Open();
 
             var dbContext = CreateDbContext();
             dbContext.Database.EnsureCreated();
@@ -21,14 +21,14 @@ namespace BlazorWasmTesting.Test.Helpers
         public Server.Db.BlazorWasmTestingDbContext CreateDbContext() => new
         (
             new DbContextOptionsBuilder<Server.Db.BlazorWasmTestingDbContext>()
-                .UseSqlite(_connection)
+                .UseSqlite(Connection)
                 .Options
         );
 
         public void Dispose()
         {
-            _connection!.Dispose();
-            _connection = null!;
+            Connection!.Dispose();
+            Connection = null!;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlazorWasmTesting.Test.Mocks
 {
-    class WeatherForecastFetcherMock : IWeatherForecastFetcher
+    public class WeatherForecastFetcherMock : IWeatherForecastFetcher
     {
         public List<WeatherForecast> WeatherForecasts { get; } = new List<WeatherForecast>();
 

@@ -32,14 +32,6 @@ namespace BlazorWasmTesting.Server.Controllers
             return await _dbContext.Persons.ToArrayAsync();
         }
 
-        [HttpPut]
-        public Task Put(Person person)
-        {
-            _logger.LogInformation($"{nameof(Put)}({person})");
-            _dbContext.Persons.Update(person);
-            return _dbContext.SaveChangesAsync();
-        }
-
         [HttpPost]
         public Task Post(Person person)
         {
@@ -48,12 +40,21 @@ namespace BlazorWasmTesting.Server.Controllers
             return _dbContext.SaveChangesAsync();
         }
 
-        [HttpDelete]
-        public Task Delete(Person person)
+        [HttpPut]
+        public Task Put(Person person)
         {
-            _logger.LogInformation($"{nameof(Delete)}({person})");
-            _dbContext.Persons.Remove(person);
+            _logger.LogInformation($"{nameof(Put)}({person})");
+            _dbContext.Persons.Update(person);
             return _dbContext.SaveChangesAsync();
+        }
+
+        [HttpDelete]
+        public async Task Delete(int key)
+        {
+            _logger.LogInformation($"{nameof(Delete)}({key})");
+            
+            _dbContext.Persons.Remove(await _dbContext.Persons.SingleAsync(s => s.Key == key));
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace BlazorWasmTesting.Shared.Api
 {
     public interface IPersonsApi
     {
-        Task Delete(Person person);
+        Task Delete(int key);
         Task<IEnumerable<Person>> Get();
         Task Post(Person person);
         Task Put(Person person);
