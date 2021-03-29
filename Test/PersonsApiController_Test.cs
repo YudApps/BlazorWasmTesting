@@ -1,9 +1,9 @@
 ﻿using BlazorWasmTesting.Client.Clients;
 using BlazorWasmTesting.Server.Controllers;
 using BlazorWasmTesting.Shared.Api;
+using BlazorWasmTesting.Shared.Contracts;
 using BlazorWasmTesting.Test.Helpers;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Threading.Tasks;
@@ -72,8 +72,8 @@ namespace BlazorWasmTesting.Test
             // Arrange: put data directly to the Db.
             var db = _dbContextFactory.CreateDbContext();
             db.Persons.AddRange(
-                new Shared.Person(0, "FirstName1", "LastName1", null),
-                new Shared.Person(0, "FirstName2", "LastName2", "MiddleName2"));
+                new Person(0, "FirstName1", "LastName1", null),
+                new Person(0, "FirstName2", "LastName2", "MiddleName2"));
             db.SaveChanges();
 
             // Act
@@ -87,8 +87,8 @@ namespace BlazorWasmTesting.Test
         public async Task Post_AssertDb()
         {
             // Act
-            await _personsApi.Post(new Shared.Person(0, "FirstName1", "LastName1", null));
-            await _personsApi.Post(new Shared.Person(0, "FirstName2", "LastName2", "MiddleName2"));
+            await _personsApi.Post(new Person(0, "FirstName1", "LastName1", null));
+            await _personsApi.Post(new Person(0, "FirstName2", "LastName2", "MiddleName2"));
 
             // Assert: verify data was added to the db.
             var db = _dbContextFactory.CreateDbContext();
@@ -99,7 +99,7 @@ namespace BlazorWasmTesting.Test
         public void Post_VerifyDbRequiredAttribute()
         {
             // Act
-            Func<Task> put = () => _personsApi.Post(new Shared.Person(0, "FirstName1", null /*Required*/, null));
+            Func<Task> put = () => _personsApi.Post(new Person(0, "FirstName1", null /*Required*/, null));
 
             // Assert
             put.Should().Throw<Exception>();
@@ -109,8 +109,8 @@ namespace BlazorWasmTesting.Test
         public async Task PostAndGet_ApiOnlyTesting()
         {
             // Act
-            await _personsApi.Post(new Shared.Person(0, "FirstName1", "LastName1", null));
-            await _personsApi.Post(new Shared.Person(0, "FirstName2", "LastName2", "MiddleName2"));
+            await _personsApi.Post(new Person(0, "FirstName1", "LastName1", null));
+            await _personsApi.Post(new Person(0, "FirstName2", "LastName2", "MiddleName2"));
             var persons = await _personsApi.Get();
 
             // Assert
@@ -121,9 +121,9 @@ namespace BlazorWasmTesting.Test
         public async Task PostAndDelete_ApiOnlyTesting()
         {
             // Act
-            await _personsApi.Post(new Shared.Person(0, "FirstName1", "LastName1", null));
-            await _personsApi.Post(new Shared.Person(0, "FirstName2", "LastName2", "MiddleName2"));
-            await _personsApi.Post(new Shared.Person(0, "FirstName3", "LastName3", null));
+            await _personsApi.Post(new Person(0, "FirstName1", "LastName1", null));
+            await _personsApi.Post(new Person(0, "FirstName2", "LastName2", "MiddleName2"));
+            await _personsApi.Post(new Person(0, "FirstName3", "LastName3", null));
 
             await _personsApi.Delete(2);
 
@@ -136,9 +136,9 @@ namespace BlazorWasmTesting.Test
         public async Task PostAndDelete_AssertDb()
         {
             // Act
-            await _personsApi.Post(new Shared.Person(0, "FirstName1", "LastName1", null));
-            await _personsApi.Post(new Shared.Person(0, "FirstName2", "LastName2", "MiddleName2"));
-            await _personsApi.Post(new Shared.Person(0, "FirstName3", "LastName3", null));
+            await _personsApi.Post(new Person(0, "FirstName1", "LastName1", null));
+            await _personsApi.Post(new Person(0, "FirstName2", "LastName2", "MiddleName2"));
+            await _personsApi.Post(new Person(0, "FirstName3", "LastName3", null));
 
             await _personsApi.Delete(2);
 

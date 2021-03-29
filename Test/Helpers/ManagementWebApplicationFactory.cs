@@ -11,18 +11,16 @@ namespace BlazorWasmTesting.Test.Helpers
 {
     public class BlazorWasmTestingWebApplicationFactory : WebApplicationFactory<Server.Startup>
     {
-        private readonly DbContextFactory _dbContextFactory;
-
         public BlazorWasmTestingWebApplicationFactory() : this(new DbContextFactory()) {}
 
         public BlazorWasmTestingWebApplicationFactory(DbContextFactory dbContextFactory)
         {
-            _dbContextFactory = dbContextFactory;
+            DbContextFactory = dbContextFactory;
+            WeatherForecastFetcher = new WeatherForecastFetcherMock();
         }
 
-        public WeatherForecastFetcherMock WeatherForecastFetcher { get; } = new WeatherForecastFetcherMock();
-
-
+        public DbContextFactory DbContextFactory { get; }
+        public WeatherForecastFetcherMock WeatherForecastFetcher { get; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -37,7 +35,7 @@ namespace BlazorWasmTesting.Test.Helpers
 
                 services.AddDbContext<BlazorWasmTestingDbContext>(options =>
                 {
-                    options.UseSqlite(_dbContextFactory.Connection);
+                    options.UseSqlite(DbContextFactory.Connection);
                 });
             });
         }

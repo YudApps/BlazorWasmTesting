@@ -1,4 +1,4 @@
-﻿using BlazorWasmTesting.Shared;
+﻿using BlazorWasmTesting.Shared.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorWasmTesting.Server.Db

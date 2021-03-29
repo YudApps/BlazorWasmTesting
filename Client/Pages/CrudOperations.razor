@@ -1,0 +1,78 @@
+﻿@page "/crudoperations"
+
+@using BlazorWasmTesting.Shared.Api;
+@using BlazorWasmTesting.Shared.Contracts
+
+@inject IPersonsApi PersonsClient
+
+<h1>Persons</h1>
+
+<p>This component demonstrates CRUD (create/read/update/delete) data operations.</p>
+
+@if(!IsInitialized)
+
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<EditForm id="person_form" Model="@Person" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p><label>Key: @(Person.Key == 0 ? "-" : Person.Key.ToString())</label></p>
+    <p><label>First Name: <InputText id="person_form__first-name" @bind-Value="Person.FirstName" /></label></p>
+    <p><label>Middle Name: <InputText id="person_form__middle-name" @bind-Value="Person.MiddleName" /></label></p>
+    <p><label>Last Name: <InputText id="person_form__last-name" @bind-Value="Person.LastName" /></label></p>
+    <button id="person_form__submit" type="submit">Submit</button>
+</EditForm>
+    <table class="table" id="persons_table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>FirstName</th>
+                <th>MiddleName</th>
+                <th>LastName</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in persons)
+            {
+            <tr>
+                <td>@person.Key</td>
+                <td>@person.FirstName</td>
+                <td>@person.MiddleName</td>
+                <td>@person.LastName</td>
+                <td><button @onclick="() => Person = person.ShallowCopy()">Edit</button></td>
+                <td><button id="persons_table__delete_button__@(person.Key)" @onclick="() => DeletePerson(person.Key)">Delete</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Person> persons;
+
+    public bool IsInitialized => persons is not null;
+
+    public Person Person { get; set; } = new Person();
+
+    protected override async Task OnInitializedAsync()
+    {
+        persons = await PersonsClient.Get();
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        await ((Person.Key == 0) ? PersonsClient.Post(Person) : PersonsClient.Put(Person));
+        Person = new Person();
+        await OnInitializedAsync();
+    }
+
+    public async Task DeletePerson(int key)
+    {
+        await PersonsClient.Delete(key);
+        await OnInitializedAsync();
+    }
+}
+

@@ -62,6 +62,11 @@ namespace BlazorWasmTesting.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
+            var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using var serviceScope = serviceScopeFactory.CreateScope();
+            var dbContext = serviceScope.ServiceProvider.GetService<Db.BlazorWasmTestingDbContext>();
+            dbContext.Database.EnsureCreated();
         }
     }
 }

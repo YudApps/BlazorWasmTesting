@@ -1,4 +1,4 @@
-﻿using BlazorWasmTesting.Shared;
+﻿using BlazorWasmTesting.Shared.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

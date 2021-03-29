@@ -1,13 +1,10 @@
 ﻿using BlazorWasmTesting.Server.Db;
-using BlazorWasmTesting.Server.ExternalApis;
-using BlazorWasmTesting.Shared;
 using BlazorWasmTesting.Shared.Api;
+using BlazorWasmTesting.Shared.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorWasmTesting.Server.Controllers

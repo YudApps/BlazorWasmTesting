@@ -1,5 +1,5 @@
-﻿using BlazorWasmTesting.Shared;
-using BlazorWasmTesting.Shared.Api;
+﻿using BlazorWasmTesting.Shared.Api;
+using BlazorWasmTesting.Shared.Contracts;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;

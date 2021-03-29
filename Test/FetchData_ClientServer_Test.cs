@@ -3,18 +3,17 @@ using Bunit;
 using FluentAssertions;
 using Xunit;
 using RichardSzalay.MockHttp;
-using BlazorWasmTesting.Shared;
 using System;
 using BlazorWasmTesting.Test.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http;
+using BlazorWasmTesting.Shared.Contracts;
 
 namespace BlazorWasmTesting.Test
 {
     public class FetchData_ClientServer_Test
     {
         [Fact]
-        public void ClientOnly_MockHttpClient_CounterShouldIncrementWhenClicked()
+        public void ClientOnly_MockHttpClient_DataFetchFromMock()
         {
             // Arrange
             using var ctx = new TestContext();
@@ -28,7 +27,7 @@ namespace BlazorWasmTesting.Test
                     new () { Date = DateTime.Now, TemperatureC = 20, Summary = "Summary2" },
                 });
 
-            // Act: render the Counter.razor component
+            // Act: render the razor component
             var cut = ctx.RenderComponent<FetchData>();
 
             // Assert: Find the <body> element, then verify its has 2 children
@@ -36,7 +35,7 @@ namespace BlazorWasmTesting.Test
         }
 
         [Fact]
-        public void ClientServer_WebApplicationFactoryHttpClient_CounterShouldIncrementWhenClicked()
+        public void ClientServer_WebApplicationFactoryHttpClient__DataFetchFromWeatherForecastFetcherMock()
         {
             // Arrange
             using var webApplicatonFactory = new BlazorWasmTestingWebApplicationFactory();
@@ -53,7 +52,7 @@ namespace BlazorWasmTesting.Test
                     new () { Date = DateTime.Now, TemperatureC = 30, Summary = "Summary3" },
                 });
 
-            // Act: render the Counter.razor component
+            // Act: render the razor component
             var cut = ctx.RenderComponent<FetchData>();
 
             // Assert: Find the <body> element, then verify its has 3 children

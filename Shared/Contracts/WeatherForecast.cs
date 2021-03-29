@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlazorWasmTesting.Shared
+namespace BlazorWasmTesting.Shared.Contracts
 {
     public class WeatherForecast
     {

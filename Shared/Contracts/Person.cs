@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlazorWasmTesting.Shared
+namespace BlazorWasmTesting.Shared.Contracts
 {
     public class Person
     {
@@ -27,5 +27,10 @@ namespace BlazorWasmTesting.Shared
 
         [StringLength(255)]
         public string MiddleName { get; set; }
+
+        public Person ShallowCopy()
+        {
+            return (Person)this.MemberwiseClone();
+        }
     }
 }
